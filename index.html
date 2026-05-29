@@ -185,22 +185,18 @@
     }
   }
   .preview-card:active { opacity:0.92; }
+  .preview-card__media {
+    display:block;
+    line-height:0;
+    border-radius:6px;
+    overflow:hidden;
+    background:var(--card);
+  }
   .preview-card img {
     width:100%;
     height:auto;
     display:block;
-    border-radius:6px;
-    vertical-align:bottom;
-  }
-  /* 경력 페이지: 소장처 하단이 잘리지 않도록 */
-  #career {
-    padding-bottom:8px;
-    margin-bottom:4px;
-  }
-  #career img {
-    padding-bottom:0;
-    object-fit:contain;
-    object-position:top center;
+    max-height:none;
   }
   .preview-card .page-label {
     position:absolute;
@@ -413,9 +409,11 @@
       <span class="zoom-hint">탭하여 확대</span>
     </figure>
 
-    <figure class="preview-card" id="career" data-src="images/02.jpg?v=4" data-caption="02 · CAREER SUMMARY" tabindex="0" role="button" aria-label="경력 페이지 확대 보기">
+    <figure class="preview-card" id="career" data-src="images/02.jpg?v=5" data-caption="02 · CAREER SUMMARY" tabindex="0" role="button" aria-label="경력 페이지 확대 보기">
       <span class="page-label">02 CAREER</span>
-      <img src="images/02.jpg?v=4" alt="경력 및 전시 이력" loading="lazy">
+      <div class="preview-card__media">
+        <img src="images/02.jpg?v=5" alt="경력 및 전시 이력" loading="lazy">
+      </div>
       <span class="zoom-hint">탭하여 확대</span>
     </figure>
 
