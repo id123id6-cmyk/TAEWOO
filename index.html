@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f5f5f3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>TAEWOO PORTFOLIO | 家守虎 가수호</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Serif+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --bg:#f5f5f3;
+    --card:#ffffff;
+    --ink:#0a0a0a;
+    --sub:#8a8a8a;
+    --line:#e8e8e6;
+    --nav-h:52px;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+  }
+  html {
+    scroll-behavior:smooth;
+    scroll-padding-top: calc(var(--nav-h) + 12px);
+    -webkit-text-size-adjust:100%;
+  }
+  body {
+    font-family:'Inter', 'Noto Serif KR', sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:var(--safe-bottom);
+    -webkit-tap-highlight-color:transparent;
+  }
+  img { display:block; max-width:100%; height:auto; }
+
+  .top-bar {
+    text-align:center;
+    padding:calc(28px + var(--safe-top)) 16px 16px;
+  }
+  .brand-circle {
+    width:64px; height:64px;
+    border-radius:50%;
+    background:var(--ink);
+    color:#fff;
+    display:inline-flex;
+    flex-direction:column;
+    align-items:center; justify-content:center;
+    font-size:0.52rem;
+    letter-spacing:1px;
+    line-height:1.3;
+    font-family:'Noto Serif KR', serif;
+  }
+  .brand-circle b { font-size:0.68rem; font-weight:700; }
+  .top-bar h1 {
+    margin-top:18px;
+    font-family:'Noto Serif KR', serif;
+    font-size:clamp(1.45rem, 6vw, 2.6rem);
+    font-weight:400;
+    letter-spacing:-0.5px;
+    line-height:1.25;
+  }
+  .top-bar h1 .han {
+    font-weight:700;
+    background:linear-gradient(120deg, #0a0a0a 0%, #4a4a4a 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .top-bar .subtitle {
+    color:var(--sub);
+    font-size:clamp(0.68rem, 2.8vw, 0.85rem);
+    letter-spacing:3px;
+    margin-top:8px;
+    text-transform:uppercase;
+  }
+
+  .nav-wrap {
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(245,245,243,0.95);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+    padding-top:var(--safe-top);
+  }
+  .nav {
+    display:flex;
+    gap:0;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+    padding:0 calc(8px + var(--safe-left)) 0 calc(8px + var(--safe-right));
+  }
+  .nav::-webkit-scrollbar { display:none; }
+  .nav a {
+    flex:0 0 auto;
+    color:var(--ink);
+    text-decoration:none;
+    font-size:0.72rem;
+    letter-spacing:1.5px;
+    font-weight:600;
+    padding:14px 16px;
+    min-height:var(--nav-h);
+    display:flex;
+    align-items:center;
+    scroll-snap-align:start;
+    touch-action:manipulation;
+    white-space:nowrap;
+    position:relative;
+  }
+  .nav a::after {
+    content:'';
+    position:absolute;
+    left:16px; right:16px; bottom:8px;
+    height:2px;
+    background:var(--ink);
+    transform:scaleX(0);
+    transition:transform 0.25s ease;
+  }
+  .nav a:active::after { transform:scaleX(1); }
+
+  @media (hover:hover) {
+    .nav {
+      justify-content:center;
+      flex-wrap:wrap;
+      overflow:visible;
+      scroll-snap-type:none;
+      gap:8px 28px;
+      padding:12px 24px;
+    }
+    .nav a { padding:6px 0; min-height:auto; }
+    .nav a::after { left:0; right:0; bottom:-2px; height:1px; }
+    .nav a:hover::after { transform:scaleX(1); }
+  }
+
+  .container {
+    max-width:720px;
+    margin:0 auto;
+    padding:20px 12px 80px;
+  }
+  @media (min-width:641px) {
+    .container { padding:40px 20px 60px; }
+  }
+
+  .preview-list {
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  @media (min-width:641px) {
+    .preview-list { gap:28px; }
+  }
+
+  .preview-card {
+    background:var(--card);
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow:0 1px 3px rgba(0,0,0,0.04), 0 6px 20px rgba(0,0,0,0.05);
+    cursor:pointer;
+    transition:transform 0.35s ease, box-shadow 0.35s ease;
+    opacity:0;
+    transform:translateY(20px);
+    position:relative;
+    scroll-margin-top:calc(var(--nav-h) + 16px);
+    touch-action:manipulation;
+    -webkit-user-select:none;
+    user-select:none;
+  }
+  .preview-card.show {
+    opacity:1;
+    transform:translateY(0);
+  }
+  @media (hover:hover) {
+    .preview-card { cursor:zoom-in; }
+    .preview-card:hover {
+      transform:translateY(-4px);
+      box-shadow:0 4px 8px rgba(0,0,0,0.06), 0 20px 50px rgba(0,0,0,0.1);
+    }
+  }
+  .preview-card:active { opacity:0.92; }
+  .preview-card img {
+    width:100%;
+    height:auto;
+  }
+  .preview-card .page-label {
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:var(--ink);
+    color:#fff;
+    font-size:0.58rem;
+    padding:4px 8px;
+    border-radius:3px;
+    letter-spacing:1.5px;
+    font-weight:600;
+    pointer-events:none;
+  }
+  .preview-card .zoom-hint {
+    position:absolute;
+    bottom:10px;
+    right:10px;
+    background:rgba(0,0,0,0.6);
+    color:#fff;
+    font-size:0.62rem;
+    padding:6px 10px;
+    border-radius:20px;
+    letter-spacing:0.5px;
+    pointer-events:none;
+  }
+  @media (hover:hover) {
+    .preview-card .zoom-hint { opacity:0; transition:opacity 0.3s; }
+    .preview-card:hover .zoom-hint { opacity:1; }
+  }
+
+  footer {
+    text-align:center;
+    padding:24px 16px calc(24px + var(--safe-bottom));
+    color:var(--sub);
+    font-size:0.68rem;
+    letter-spacing:1.5px;
+    line-height:1.8;
+  }
+
+  .mobile-cta {
+    display:flex;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:90;
+    background:rgba(255,255,255,0.96);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);
+    padding:10px 12px calc(10px + var(--safe-bottom));
+    gap:8px;
+    transform:translateY(100%);
+    transition:transform 0.35s ease;
+  }
+  .mobile-cta.visible { transform:translateY(0); }
+  .mobile-cta a {
+    flex:1;
+    text-align:center;
+    text-decoration:none;
+    font-size:0.72rem;
+    font-weight:600;
+    letter-spacing:0.5px;
+    padding:12px 8px;
+    border-radius:6px;
+    touch-action:manipulation;
+    min-height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .mobile-cta .btn-call {
+    background:var(--ink);
+    color:#fff;
+  }
+  .mobile-cta .btn-mail {
+    background:var(--bg);
+    color:var(--ink);
+    border:1.5px solid var(--line);
+  }
+  @media (min-width:641px) {
+    .mobile-cta { display:none; }
+    footer { padding-bottom:30px; }
+    .container { padding-bottom:60px; }
+  }
+
+  .lightbox {
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:rgba(0,0,0,0.96);
+    touch-action:none;
+  }
+  .lightbox.active {
+    display:block;
+    overflow:hidden;
+  }
+  .lightbox-toolbar {
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:10001;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:calc(10px + var(--safe-top)) calc(12px + var(--safe-right)) 10px calc(12px + var(--safe-left));
+    background:linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+    pointer-events:none;
+  }
+  .lightbox-toolbar > * { pointer-events:auto; }
+  .lightbox-caption {
+    color:rgba(255,255,255,0.9);
+    font-size:0.72rem;
+    letter-spacing:1px;
+    max-width:65%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .lightbox-close {
+    background:rgba(255,255,255,0.95);
+    border:none;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    font-size:1.4rem;
+    cursor:pointer;
+    box-shadow:0 2px 12px rgba(0,0,0,0.3);
+    line-height:1;
+    touch-action:manipulation;
+    flex-shrink:0;
+  }
+  .lightbox-viewport {
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:calc(56px + var(--safe-top)) calc(8px + var(--safe-right)) calc(16px + var(--safe-bottom)) calc(8px + var(--safe-left));
+  }
+  .lightbox-stage {
+    transform-origin:center center;
+    transition:transform 0.05s linear;
+    will-change:transform;
+  }
+  .lightbox img {
+    display:block;
+    max-width:min(100vw - 16px, 720px);
+    width:100%;
+    height:auto;
+    border-radius:2px;
+    -webkit-user-drag:none;
+    user-select:none;
+  }
+  .lightbox-hint {
+    position:fixed;
+    bottom:calc(12px + var(--safe-bottom));
+    left:50%;
+    transform:translateX(-50%);
+    color:rgba(255,255,255,0.55);
+    font-size:0.65rem;
+    letter-spacing:0.5px;
+    white-space:nowrap;
+    pointer-events:none;
+    z-index:10001;
+  }
+  @media (min-width:641px) {
+    .lightbox-hint { font-size:0.72rem; }
+  }
+
+  @media (prefers-reduced-motion:reduce) {
+    html { scroll-behavior:auto; }
+    .preview-card, .mobile-cta, .lightbox-stage { transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="brand-circle">
+    <span style="font-size:0.48rem;">PRIVATE</span>
+    <b>사적인</b>
+    <span style="font-size:0.48rem;">COLLECTION</span>
+  </div>
+  <h1>TAEWOO <span class="han">家守虎</span> Portfolio</h1>
+  <div class="subtitle">Artist · Korean Ink · Tiger</div>
+</header>
+
+<div class="nav-wrap">
+  <nav class="nav" aria-label="페이지 이동">
+    <a href="#intro">INTRO</a>
+    <a href="#career">CAREER</a>
+    <a href="#works">WORKS</a>
+    <a href="#statement">STATEMENT</a>
+    <a href="#curator">CURATOR</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+</div>
+
+<main class="container">
+  <div class="preview-list">
+
+    <figure class="preview-card" id="intro" data-src="images/01.jpg" data-caption="01 · INTRODUCTION" tabindex="0" role="button" aria-label="소개 페이지 확대 보기">
+      <span class="page-label">01 INTRO</span>
+      <img src="images/01.jpg" alt="태우 작가 소개" fetchpriority="high">
+      <span class="zoom-hint">탭하여 확대</span>
+    </figure>
+
+    <figure class="preview-card" id="career" data-src="images/02.jpg" data-caption="02 · CAREER SUMMARY" tabindex="0" role="button" aria-label="경력 페이지 확대 보기">
+      <span class="page-label">02 CAREER</span>
+      <img src="images/02.jpg" alt="경력 및 전시 이력" loading="lazy">
+      <span class="zoom-hint">탭하여 확대</span>
+    </figure>
+
+    <figure class="preview-card" id="works" data-src="images/03.jpg" data-caption="03 · 가수청호도 (家守靑虎圖)" tabindex="0" role="button" aria-label="가수청호도 확대 보기">
+      <span class="page-label">03 WORKS</span>
+      <img src="images/03.jpg" alt="가수청호도 (家守靑虎圖)" loading="lazy">
+      <span class="zoom-hint">탭하여 확대</span>
+    </figure>
+
+    <figure class="preview-card" data-src="images/04.jpg" data-caption="04 · 가수호도 (家守虎圖)" tabindex="0" role="button" aria-label="가수호도 확대 보기">
+      <span class="page-label">04 WORKS</span>
+      <img src="images/04.jpg" alt="가수호도 (家守虎圖)" loading="lazy">
+      <span class="zoom-hint">탭하여 확대</span>
+    </figure>
+
+    <figure class="preview-card" data-src="images/05.jpg" data-caption="05 · 함께 라면" tabindex="0" role="button" aria-label="함께 라면 확대 보기">
+      <span class="page-label">05 WORKS</span>
+      <img src="images/05.jpg" alt="함께 라면" loading="lazy">
+      <span class="zoom-hint">탭하여 확대</span>
+    </figure>
+
+    <figure class="preview-card" id="statement" data-src="images/06.jpg" data-caption="06 · ARTIST STATEMENT" tabindex="0" role="button" aria-label="작가 노트 확대 보기">
+      <span class="page-label">06 STATEMENT</span>
+      <img src="images/06.jpg" alt="작가 노트" loading="lazy">
+      <span class="zoom-hint">탭하여 확대</span>
+    </figure>
+
+    <figure class="preview-card" data-src="images/07.jpg" data-caption="07 · STUDIO" tabindex="0" role="button" aria-label="작업실 페이지 확대 보기">
+      <span class="page-label">07 STUDIO</span>
+      <img src="images/07.jpg" alt="작업실" loading="lazy">
+      <span class="zoom-hint">탭하여 확대</span>
+    </figure>
+
+    <figure class="preview-card" id="curator" data-src="images/08.jpg" data-caption="08 · CURATOR COMMENT" tabindex="0" role="button" aria-label="큐레이터 코멘트 확대 보기">
+      <span class="page-label">08 CURATOR</span>
+      <img src="images/08.jpg" alt="큐레이터 코멘트" loading="lazy">
+      <span class="zoom-hint">탭하여 확대</span>
+    </figure>
+
+    <figure class="preview-card" data-src="images/09.jpg" data-caption="09 · 가수호(家守虎)의 복(福)" tabindex="0" role="button" aria-label="가수호의 복 확대 보기">
+      <span class="page-label">09 WORKS</span>
+      <img src="images/09.jpg" alt="가수호(家守虎)의 복(福)" loading="lazy">
+      <span class="zoom-hint">탭하여 확대</span>
+    </figure>
+
+    <figure class="preview-card" data-src="images/10.jpg" data-caption="10 · OUR HOME" tabindex="0" role="button" aria-label="OUR HOME 확대 보기">
+      <span class="page-label">10 WORKS</span>
+      <img src="images/10.jpg" alt="OUR HOME" loading="lazy">
+      <span class="zoom-hint">탭하여 확대</span>
+    </figure>
+
+    <figure class="preview-card" id="contact" data-src="images/11.jpg" data-caption="11 · CONTACT" tabindex="0" role="button" aria-label="문의 페이지 확대 보기">
+      <span class="page-label">11 CONTACT</span>
+      <img src="images/11.jpg" alt="작품 구매 문의" loading="lazy">
+      <span class="zoom-hint">탭하여 확대</span>
+    </figure>
+
+    <figure class="preview-card" data-src="images/12.jpg" data-caption="12 · ARTIST TAEWOO" tabindex="0" role="button" aria-label="작가 페이지 확대 보기">
+      <span class="page-label">12 ARTIST</span>
+      <img src="images/12.jpg" alt="ARTIST 태우" loading="lazy">
+      <span class="zoom-hint">탭하여 확대</span>
+    </figure>
+
+  </div>
+</main>
+
+<footer>
+  © 2026 TAEWOO · 사적인 컬렉션 · ALL RIGHTS RESERVED
+</footer>
+
+<div class="mobile-cta" id="mobileCta" aria-label="빠른 문의">
+  <a class="btn-call" href="tel:01044974069">전화 문의</a>
+  <a class="btn-mail" href="mailto:sjhwang@artculture4u.kr">이메일</a>
+</div>
+
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="lightbox-toolbar">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+    <button class="lightbox-close" type="button" aria-label="닫기">×</button>
+  </div>
+  <div class="lightbox-viewport" id="lightboxViewport">
+    <div class="lightbox-stage" id="lightboxStage">
+      <img id="lightboxImg" src="" alt="">
+    </div>
+  </div>
+  <div class="lightbox-hint" id="lightboxHint">두 손가락으로 확대 · 드래그로 이동</div>
+</div>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const lightboxStage = document.getElementById('lightboxStage');
+  const lightboxViewport = document.getElementById('lightboxViewport');
+  const lightboxHint = document.getElementById('lightboxHint');
+  const mobileCta = document.getElementById('mobileCta');
+  const closeBtn = document.querySelector('.lightbox-close');
+
+  let scale = 1, posX = 0, posY = 0;
+  let lastDistance = 0, lastTap = 0;
+  let isDragging = false, startX = 0, startY = 0;
+
+  function applyTransform() {
+    lightboxStage.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+  }
+
+  function resetZoom() {
+    scale = 1;
+    posX = 0;
+    posY = 0;
+    applyTransform();
+  }
+
+  function openLightbox(src, caption) {
+    resetZoom();
+    lightboxImg.src = src;
+    lightboxImg.alt = caption || '';
+    lightboxCaption.textContent = caption || '';
+    lightbox.classList.add('active');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    mobileCta.classList.remove('visible');
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    lightboxImg.src = '';
+    resetZoom();
+    updateMobileCta();
+  }
+
+  function getDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.hypot(dx, dy);
+  }
+
+  lightboxViewport.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      lastDistance = getDistance(e.touches);
+      e.preventDefault();
+    } else if (e.touches.length === 1 && scale > 1) {
+      isDragging = true;
+      startX = e.touches[0].clientX - posX;
+      startY = e.touches[0].clientY - posY;
+    }
+  }, { passive: false });
+
+  lightboxViewport.addEventListener('touchmove', e => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      const dist = getDistance(e.touches);
+      if (lastDistance > 0) {
+        scale = Math.min(Math.max(scale * (dist / lastDistance), 1), 4);
+        if (scale === 1) { posX = 0; posY = 0; }
+        applyTransform();
+      }
+      lastDistance = dist;
+    } else if (e.touches.length === 1 && isDragging && scale > 1) {
+      e.preventDefault();
+      posX = e.touches[0].clientX - startX;
+      posY = e.touches[0].clientY - startY;
+      applyTransform();
+    }
+  }, { passive: false });
+
+  lightboxViewport.addEventListener('touchend', e => {
+    if (e.touches.length < 2) lastDistance = 0;
+    if (e.touches.length === 0) isDragging = false;
+
+    const now = Date.now();
+    if (e.changedTouches.length === 1 && now - lastTap < 300) {
+      if (scale > 1) resetZoom();
+      else { scale = 2; applyTransform(); }
+      lastTap = 0;
+    } else {
+      lastTap = now;
+    }
+  });
+
+  lightboxViewport.addEventListener('wheel', e => {
+    if (!lightbox.classList.contains('active')) return;
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+    scale = Math.min(Math.max(scale * delta, 1), 4);
+    if (scale === 1) { posX = 0; posY = 0; }
+    applyTransform();
+  }, { passive: false });
+
+  document.querySelectorAll('.preview-card').forEach(card => {
+    card.addEventListener('click', () => {
+      openLightbox(card.dataset.src, card.dataset.caption);
+    });
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openLightbox(card.dataset.src, card.dataset.caption);
+      }
+    });
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  function updateMobileCta() {
+    if (window.innerWidth >= 641 || lightbox.classList.contains('active')) return;
+    const contact = document.getElementById('contact');
+    if (!contact) return;
+    const rect = contact.getBoundingClientRect();
+    mobileCta.classList.toggle('visible', rect.top < window.innerHeight);
+  }
+
+  window.addEventListener('scroll', updateMobileCta, { passive: true });
+  window.addEventListener('resize', updateMobileCta, { passive: true });
+  updateMobileCta();
+
+  document.querySelectorAll('.nav a').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('show');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.preview-card').forEach(c => io.observe(c));
+</script>
+
+</body>
+</html>

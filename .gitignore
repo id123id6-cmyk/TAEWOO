@@ -1,0 +1,8 @@
+# 원본 프리뷰 폴더 (images/에 복사본 있음)
+새 폴더/
+
+# OS / 에디터
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
